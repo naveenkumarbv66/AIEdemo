@@ -7,12 +7,11 @@ import com.naveen.aiedemo.view.room.model.TodoTableModel
 
 abstract class TodoTaskRepository : Repository {
 
-    var todoTaskDatabase: TodoTaskDatabase? = null
-    var todoTaskTableModel: LiveData<List<TodoTableModel>>? = null
+    lateinit var todoTaskDatabase: TodoTaskDatabase
 
     abstract fun saveTodoTask(taskName: String, taskInfo: String, context: Context)
 
-    abstract fun getData(context: Context): LiveData<List<TodoTableModel>>?
+    abstract fun getData(context: Context): LiveData<List<TodoTableModel>>
 
     private fun initializeDB(context: Context): TodoTaskDatabase {
         return TodoTaskDatabase.getDatabaseClient(context)

@@ -12,13 +12,12 @@ class TodoTaskRepositoryImpl : TodoTaskRepository() {
         initializeDatabase(context)
         CoroutineScope(Dispatchers.IO).launch {
             val loginDetails = TodoTableModel(taskName, taskInfo)
-            todoTaskDatabase!!.todoTaskDao().insertTodoTask(loginDetails)
+            todoTaskDatabase.todoTaskDao().insertTodoTask(loginDetails)
         }
     }
 
-    override fun getData(context: Context): LiveData<List<TodoTableModel>>? {
+    override fun getData(context: Context): LiveData<List<TodoTableModel>> {
         initializeDatabase(context)
-        todoTaskTableModel = todoTaskDatabase!!.todoTaskDao().getTodoTaskList()
-        return todoTaskTableModel
+        return todoTaskDatabase.todoTaskDao().getTodoTaskList()
     }
 }

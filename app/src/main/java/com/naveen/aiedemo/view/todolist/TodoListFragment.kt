@@ -5,11 +5,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.naveen.aiedemo.R
+import com.naveen.aiedemo.databinding.FragmentTodolistBinding
+import com.naveen.aiedemo.view.adapter.TodoTaskListAdapter
 import com.naveen.aiedemo.view.room.model.TodoTableModel
 import com.naveen.aiedemo.view.room.repository.TodoTaskRepositoryImpl
 import kotlinx.android.synthetic.main.fragment_todolist.*
@@ -21,18 +25,41 @@ class TodoListFragment : Fragment() {
 
     private val todoTaskViewModel: TodoTaskViewModel by activityViewModels()
 
+    lateinit var binding: FragmentTodolistBinding
+
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_todolist, container, false)
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_todolist,
+            container,
+            false
+        )
+
+        binding.lifecycleOwner = this;
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         todoTaskViewModel.todoTaskRepository = TodoTaskRepositoryImpl()
+
+        val layoutManager = LinearLayoutManager(context)
+        todoListRecyclerView.layoutManager = layoutManager
+        todoListRecyclerView.hasFixedSize()
+        todoListRecyclerView.adapter = TodoTaskListAdapter()
+        todoListRecyclerView.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                layoutManager.orientation
+            )
+        )
+
+        binding.viewModel = todoTaskViewModel
 
         insertData.setOnClickListener {
             // findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
@@ -45,23 +72,35 @@ class TodoListFragment : Fragment() {
             }
         }
 
-        read.setOnClickListener {
-            activity?.let { it1 ->
-                todoTaskViewModel.getData(it1.applicationContext)
-                    ?.observe(viewLifecycleOwner, Observer {
-                        if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
-                            it.forEachIndexed { index: Int, todoTableModel: TodoTableModel ->
-                                Log.d(
-                                    "Naveen",
-                                    "====> " + todoTableModel.Id.toString().plus(" => ").plus(
-                                        todoTableModel.TaskTitle.plus(" : ")
-                                            .plus(todoTableModel.TaskInfo)
-                                    )
-                                )
-                            }
-                        }
-                    })
+        todoTaskViewModel.liveDataTodoTableModelTest.observe(viewLifecycleOwner, {
+            it.forEachIndexed { index: Int, todoTableModel: TodoTableModel ->
+                Log.d(
+                    "Naveen",
+                    "====> " + todoTableModel.Id.toString().plus(" => ").plus(
+                        todoTableModel.TaskTitle.plus(" : ")
+                            .plus(todoTableModel.TaskInfo)
+                    )
+                )
             }
+        })
+
+        read.setOnClickListener {
+            getTodoCompleteList()
+        }
+
+        binding.executePendingBindings()
+        getTodoCompleteList();
+    }
+
+    private fun getTodoCompleteList(){
+        activity?.let { it1 ->
+            todoTaskViewModel.getData(it1.applicationContext)
+                ?.observe(viewLifecycleOwner, {
+                    if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
+                        if(it.isNullOrEmpty())  todoTaskViewModel.liveDataTodoTableModelTest.value = todoTaskViewModel.getIDefaultNoDataMessage()
+                        else todoTaskViewModel.liveDataTodoTableModelTest.value = it
+                    }
+                })
         }
     }
 }
