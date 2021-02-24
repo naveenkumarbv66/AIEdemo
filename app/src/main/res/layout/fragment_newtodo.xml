@@ -8,6 +8,8 @@
         <variable
             name="viewModel"
             type="com.naveen.aiedemo.view.todolist.TodoTaskViewModel" />
+
+        <import type="android.text.TextUtils" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -48,6 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="Save"
+            android:enabled="@{ (!TextUtils.isEmpty(taskBio.text.toString())) || !TextUtils.isEmpty(taskBio.text.toString())}"
             android:onClick="@{(view) -> viewModel.saveNewTask()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

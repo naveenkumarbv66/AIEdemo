@@ -52,8 +52,8 @@ class TodoTaskListAdapter : RecyclerView.Adapter<ViewHolder>() {
     ) : ViewHolder(binding.root) {
 
         fun bind(item: TodoTableModel) {
-            binding.title = item.TaskTitle
-            binding.info = item.TaskInfo
+            binding.title = "Title : ".plus(item.TaskTitle)
+            binding.info = "Info : ".plus(item.TaskInfo)
         }
     }
 
