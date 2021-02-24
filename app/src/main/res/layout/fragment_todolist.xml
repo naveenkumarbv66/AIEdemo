@@ -6,23 +6,47 @@
     android:layout_height="match_parent"
     tools:context=".view.todolist.TodoListFragment">
 
-    <TextView
-        android:id="@+id/textview_first"
+    <Button
+        android:id="@+id/insertData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_first_fragment"
-        app:layout_constraintBottom_toTopOf="@id/button_first"
+        android:layout_marginTop="16dp"
+        android:text="save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.455"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/todotInfo" />
+
+    <Button
+        android:id="@+id/read"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="get Data"
+        app:layout_constraintEnd_toEndOf="@+id/insertData"
+        app:layout_constraintStart_toStartOf="@+id/insertData"
+        app:layout_constraintTop_toBottomOf="@+id/insertData" />
+
+    <EditText
+        android:id="@+id/todotTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Tile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button_first"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/todotInfo"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/next"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_first" />
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Info"
+        app:layout_constraintEnd_toEndOf="@+id/todotTitle"
+        app:layout_constraintStart_toStartOf="@+id/todotTitle"
+        app:layout_constraintTop_toBottomOf="@+id/todotTitle" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

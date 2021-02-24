@@ -1,18 +1,25 @@
 package com.naveen.aiedemo.view.todolist
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Observer
 import com.naveen.aiedemo.R
+import com.naveen.aiedemo.view.room.model.TodoTableModel
+import com.naveen.aiedemo.view.room.repository.TodoTaskRepositoryImpl
+import kotlinx.android.synthetic.main.fragment_todolist.*
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 class TodoListFragment : Fragment() {
+
+    private val todoTaskViewModel: TodoTaskViewModel by activityViewModels()
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -25,8 +32,36 @@ class TodoListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<Button>(R.id.button_first).setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+        todoTaskViewModel.todoTaskRepository = TodoTaskRepositoryImpl()
+
+        insertData.setOnClickListener {
+            // findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            activity?.let { it1 ->
+                todoTaskViewModel.insertData(
+                    it1.applicationContext,
+                    todotTitle.text.toString(),
+                    todotInfo.text.toString()
+                )
+            }
+        }
+
+        read.setOnClickListener {
+            activity?.let { it1 ->
+                todoTaskViewModel.getData(it1.applicationContext)
+                    ?.observe(viewLifecycleOwner, Observer {
+                        if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
+                            it.forEachIndexed { index: Int, todoTableModel: TodoTableModel ->
+                                Log.d(
+                                    "Naveen",
+                                    "====> " + todoTableModel.Id.toString().plus(" => ").plus(
+                                        todoTableModel.TaskTitle.plus(" : ")
+                                            .plus(todoTableModel.TaskInfo)
+                                    )
+                                )
+                            }
+                        }
+                    })
+            }
         }
     }
 }
