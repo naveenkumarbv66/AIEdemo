@@ -9,10 +9,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.naveen.aiedemo.R
 import com.naveen.aiedemo.databinding.FragmentTodolistBinding
+import com.naveen.aiedemo.view.BaseFragment
 import com.naveen.aiedemo.view.adapter.TodoTaskListAdapter
 import com.naveen.aiedemo.view.room.model.TodoTableModel
 import com.naveen.aiedemo.view.room.repository.TodoTaskRepositoryImpl
@@ -21,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_todolist.*
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class TodoListFragment : Fragment() {
+class TodoListFragment : BaseFragment() {
 
     private val todoTaskViewModel: TodoTaskViewModel by activityViewModels()
 
@@ -61,17 +63,6 @@ class TodoListFragment : Fragment() {
 
         binding.viewModel = todoTaskViewModel
 
-        insertData.setOnClickListener {
-            // findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-            activity?.let { it1 ->
-                todoTaskViewModel.insertData(
-                    it1.applicationContext,
-                    todotTitle.text.toString(),
-                    todotInfo.text.toString()
-                )
-            }
-        }
-
         todoTaskViewModel.liveDataTodoTableModelTest.observe(viewLifecycleOwner, {
             it.forEachIndexed { index: Int, todoTableModel: TodoTableModel ->
                 Log.d(
@@ -84,20 +75,17 @@ class TodoListFragment : Fragment() {
             }
         })
 
-        read.setOnClickListener {
-            getTodoCompleteList()
-        }
-
         binding.executePendingBindings()
         getTodoCompleteList();
     }
 
-    private fun getTodoCompleteList(){
+    private fun getTodoCompleteList() {
         activity?.let { it1 ->
             todoTaskViewModel.getData(it1.applicationContext)
                 ?.observe(viewLifecycleOwner, {
                     if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
-                        if(it.isNullOrEmpty())  todoTaskViewModel.liveDataTodoTableModelTest.value = todoTaskViewModel.getIDefaultNoDataMessage()
+                        if (it.isNullOrEmpty()) todoTaskViewModel.liveDataTodoTableModelTest.value =
+                            todoTaskViewModel.getIDefaultNoDataMessage()
                         else todoTaskViewModel.liveDataTodoTableModelTest.value = it
                     }
                 })
