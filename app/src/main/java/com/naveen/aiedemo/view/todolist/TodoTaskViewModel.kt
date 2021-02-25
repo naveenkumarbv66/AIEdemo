@@ -22,10 +22,17 @@ class TodoTaskViewModel : ViewModel() {
     private var _createNewTaskOnClick = LiveEvent<Unit>()
     val createNewTaskOnClick: LiveData<Unit> = _createNewTaskOnClick
 
+    private var _updateTaskOnClick = LiveEvent<Unit>()
+    val updateTaskOnClick: LiveData<Unit> = _updateTaskOnClick
+
     lateinit var todoTaskRepository: TodoTaskRepository
 
     fun insertData(context: Context, taskTile: String, taskInfo: String) {
         todoTaskRepository.saveTodoTask(taskTile, taskInfo, context)
+    }
+
+    fun updateData(context: Context, taskTile: String, taskInfo: String, id: Int) {
+        todoTaskRepository.updateTodoTask(taskTile, taskInfo, id, context)
     }
 
     fun getData(context: Context): LiveData<List<TodoTableModel>>? {
@@ -44,5 +51,9 @@ class TodoTaskViewModel : ViewModel() {
 
     fun saveNewTask() {
         _createNewTaskOnClick.call()
+    }
+
+    fun updateTask() {
+        _updateTaskOnClick.call()
     }
 }

@@ -11,13 +11,20 @@ class TodoTaskRepositoryImpl : TodoTaskRepository() {
     override fun saveTodoTask(taskName: String, taskInfo: String, context: Context) {
         initializeDatabase(context)
         CoroutineScope(Dispatchers.IO).launch {
-            val loginDetails = TodoTableModel(taskName, taskInfo)
-            todoTaskDatabase.todoTaskDao().insertTodoTask(loginDetails)
+            val todoTaskDetails = TodoTableModel(taskName, taskInfo)
+            todoTaskDatabase.todoTaskDao().insertTodoTask(todoTaskDetails)
         }
     }
 
     override fun getData(context: Context): LiveData<List<TodoTableModel>> {
         initializeDatabase(context)
         return todoTaskDatabase.todoTaskDao().getTodoTaskList()
+    }
+
+    override fun updateTodoTask(taskName: String, taskInfo: String, id: Int, context: Context) {
+        initializeDatabase(context)
+        CoroutineScope(Dispatchers.IO).launch {
+            todoTaskDatabase.todoTaskDao().updateTodoTask(taskName, taskInfo, id)
+        }
     }
 }

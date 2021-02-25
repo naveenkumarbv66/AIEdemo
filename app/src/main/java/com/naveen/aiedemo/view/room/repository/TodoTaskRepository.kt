@@ -13,6 +13,8 @@ abstract class TodoTaskRepository : Repository {
 
     abstract fun getData(context: Context): LiveData<List<TodoTableModel>>
 
+    abstract fun updateTodoTask(taskName: String, taskInfo: String, id: Int, context: Context)
+
     private fun initializeDB(context: Context): TodoTaskDatabase {
         return TodoTaskDatabase.getDatabaseClient(context)
     }

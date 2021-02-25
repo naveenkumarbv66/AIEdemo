@@ -47,14 +47,15 @@ class DisplayTodoFragment : BaseFragment() {
 
         binding.viewModel = todoTaskViewModel
 
-        todoTaskViewModel.createNewTaskOnClick.observe(viewLifecycleOwner, {
+        todoTaskViewModel.updateTaskOnClick.observe(viewLifecycleOwner, {
             activity?.let { it1 ->
                 hideKeyboardFrom(it1, taskName)
                 hideKeyboardFrom(it1, taskBio)
-                todoTaskViewModel.insertData(
-                    it1.applicationContext,
-                    taskName.text.toString(),
-                    taskBio.text.toString()
+                todoTaskViewModel.updateData(
+                        it1.applicationContext,
+                        taskName.text.toString(),
+                        taskBio.text.toString(),
+                        todoTaskViewModel.selectedTaskObject.Id ?: 0
                 )
                 showAlertDialog()
             }
@@ -64,7 +65,7 @@ class DisplayTodoFragment : BaseFragment() {
     }
 
     private fun showAlertDialog() {
-        Toast.makeText(activity, "successfully stored in Room data base.", Toast.LENGTH_LONG).show()
+        Toast.makeText(activity, "successfully updated in Room data base.", Toast.LENGTH_LONG).show()
         findNavController().popBackStack()
     }
 }
