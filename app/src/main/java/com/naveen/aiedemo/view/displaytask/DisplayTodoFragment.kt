@@ -61,6 +61,18 @@ class DisplayTodoFragment : BaseFragment() {
             }
         })
 
+        todoTaskViewModel.deleteTaskOnClick.observe(viewLifecycleOwner, {
+            activity?.let { it1 ->
+                hideKeyboardFrom(it1, taskName)
+                hideKeyboardFrom(it1, taskBio)
+                todoTaskViewModel.deleteData(
+                        it1.applicationContext,
+                        todoTaskViewModel.selectedTaskObject.Id ?: 0
+                )
+                showAlertDialog()
+            }
+        })
+
         binding.executePendingBindings()
     }
 

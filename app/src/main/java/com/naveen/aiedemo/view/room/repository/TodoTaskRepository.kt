@@ -15,6 +15,8 @@ abstract class TodoTaskRepository : Repository {
 
     abstract fun updateTodoTask(taskName: String, taskInfo: String, id: Int, context: Context)
 
+    abstract fun deleteTodoTask(id: Int, context: Context)
+
     private fun initializeDB(context: Context): TodoTaskDatabase {
         return TodoTaskDatabase.getDatabaseClient(context)
     }

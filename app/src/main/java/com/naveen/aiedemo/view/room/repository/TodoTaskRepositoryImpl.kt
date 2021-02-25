@@ -27,4 +27,11 @@ class TodoTaskRepositoryImpl : TodoTaskRepository() {
             todoTaskDatabase.todoTaskDao().updateTodoTask(taskName, taskInfo, id)
         }
     }
+
+    override fun deleteTodoTask(id: Int, context: Context) {
+        initializeDatabase(context)
+        CoroutineScope(Dispatchers.IO).launch {
+            todoTaskDatabase.todoTaskDao().deleteTodoTask(id)
+        }
+    }
 }

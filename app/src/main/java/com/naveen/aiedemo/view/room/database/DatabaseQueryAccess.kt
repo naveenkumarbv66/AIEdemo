@@ -17,4 +17,7 @@ interface DatabaseQueryAccess {
     @Query("UPDATE TodoTaskTable SET TaskTitle = :taskTitle, TaskInfo= :taskInfo WHERE Id =:id")
     suspend fun updateTodoTask(taskTitle: String, taskInfo: String, id: Int)
 
+    @Query("DELETE FROM TodoTaskTable WHERE id = :id")
+    suspend fun deleteTodoTask(id: Int)
+
 }
