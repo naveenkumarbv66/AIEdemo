@@ -41,8 +41,8 @@ class TodoTaskViewModel : ViewModel() {
         todoTaskRepository.saveTodoTask(taskTile, taskInfo, taskTime, context)
     }
 
-    fun updateData(context: Context, taskTile: String, taskInfo: String, id: Int) {
-        todoTaskRepository.updateTodoTask(taskTile, taskInfo, id, context)
+    fun updateData(context: Context, taskTile: String, taskInfo: String, id: Int, taskTime: Long) {
+        todoTaskRepository.updateTodoTask(taskTile, taskInfo, id, taskTime, context)
     }
 
     fun deleteData(context: Context, id: Int) {

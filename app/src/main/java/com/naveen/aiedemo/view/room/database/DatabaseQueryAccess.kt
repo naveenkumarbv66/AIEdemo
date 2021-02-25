@@ -14,8 +14,8 @@ interface DatabaseQueryAccess {
     @Query("SELECT * FROM TodoTaskTable")
     fun getTodoTaskList(): LiveData<List<TodoTableModel>>
 
-    @Query("UPDATE TodoTaskTable SET TaskTitle = :taskTitle, TaskInfo= :taskInfo WHERE Id =:id")
-    suspend fun updateTodoTask(taskTitle: String, taskInfo: String, id: Int)
+    @Query("UPDATE TodoTaskTable SET TaskTitle = :taskTitle, TaskInfo= :taskInfo, TaskTime= :taskTime WHERE Id =:id")
+    suspend fun updateTodoTask(taskTitle: String, taskInfo: String, taskTime: Long, id: Int)
 
     @Query("DELETE FROM TodoTaskTable WHERE id = :id")
     suspend fun deleteTodoTask(id: Int)

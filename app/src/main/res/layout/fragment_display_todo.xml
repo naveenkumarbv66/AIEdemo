@@ -50,13 +50,12 @@
             android:id="@+id/updateButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="Update"
             android:enabled="@{ (!TextUtils.isEmpty(taskBio.text.toString())) || !TextUtils.isEmpty(taskBio.text.toString())}"
             android:onClick="@{(view) -> viewModel.updateTask()}"
+            android:text="Update"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/taskBio" />
+            app:layout_constraintTop_toBottomOf="@+id/button" />
 
         <Button
             android:id="@+id/deleteButton"
@@ -68,6 +67,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/updateButton"
             app:layout_constraintTop_toBottomOf="@+id/updateButton" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@{viewModel.getDateInString(viewModel.userSelectedDateTime)}"
+            android:onClick="@{(view) -> viewModel.dateTimePickerClick()}"
+            app:layout_constraintEnd_toEndOf="@+id/taskBio"
+            app:layout_constraintStart_toStartOf="@+id/taskBio"
+            app:layout_constraintTop_toBottomOf="@+id/taskBio" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -21,10 +21,10 @@ class TodoTaskRepositoryImpl : TodoTaskRepository() {
         return todoTaskDatabase.todoTaskDao().getTodoTaskList()
     }
 
-    override fun updateTodoTask(taskName: String, taskInfo: String, id: Int, context: Context) {
+    override fun updateTodoTask(taskName: String, taskInfo: String, id: Int, taskTime: Long, context: Context) {
         initializeDatabase(context)
         CoroutineScope(Dispatchers.IO).launch {
-            todoTaskDatabase.todoTaskDao().updateTodoTask(taskName, taskInfo, id)
+            todoTaskDatabase.todoTaskDao().updateTodoTask(taskName, taskInfo, taskTime, id)
         }
     }
 

@@ -13,9 +13,12 @@ import com.naveen.aiedemo.R
 import com.naveen.aiedemo.databinding.FragmentDisplayTodoBinding
 import com.naveen.aiedemo.databinding.FragmentNewtodoBinding
 import com.naveen.aiedemo.view.BaseFragment
+import com.naveen.aiedemo.view.datetimepicker.DateTimePickerDialog
 import com.naveen.aiedemo.view.listeners.RecyclerViewListener
 import com.naveen.aiedemo.view.todolist.TodoTaskViewModel
 import kotlinx.android.synthetic.main.fragment_newtodo.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 /**
@@ -52,10 +55,11 @@ class DisplayTodoFragment : BaseFragment() {
                 hideKeyboardFrom(it1, taskName)
                 hideKeyboardFrom(it1, taskBio)
                 todoTaskViewModel.updateData(
-                        it1.applicationContext,
-                        taskName.text.toString(),
-                        taskBio.text.toString(),
-                        todoTaskViewModel.selectedTaskObject.Id ?: 0
+                    it1.applicationContext,
+                    taskName.text.toString(),
+                    taskBio.text.toString(),
+                    todoTaskViewModel.selectedTaskObject.Id ?: 0,
+                    todoTaskViewModel.userSelectedDateTime.value!!.time
                 )
                 showAlertDialog()
             }
@@ -73,11 +77,36 @@ class DisplayTodoFragment : BaseFragment() {
             }
         })
 
+        todoTaskViewModel.dateTimePickerOnClick.observe(viewLifecycleOwner, {
+            openDateTimePickerDialog()
+        })
+
+        todoTaskViewModel.userSelectedDateTime.value = Date(todoTaskViewModel.selectedTaskObject.TaskTime)
+
         binding.executePendingBindings()
     }
 
     private fun showAlertDialog() {
         Toast.makeText(activity, "successfully updated in Room data base.", Toast.LENGTH_LONG).show()
         findNavController().popBackStack()
+    }
+
+    private fun openDateTimePickerDialog() {
+        val callback: (date: Date) -> Unit = { newDate ->
+            val sdf = SimpleDateFormat("dd.MM.yyyy - HH:mm", Locale.getDefault())
+            todoTaskViewModel.userSelectedDateTime.value = newDate
+        }
+
+        val currentDate = Date()
+
+        activity?.let {
+            DateTimePickerDialog.show(
+                it.supportFragmentManager,
+                "fragment_datepicker",
+                callback,
+                currentDate,
+                DateTimePickerDialog.TIME_DATE
+            )
+        }
     }
 }

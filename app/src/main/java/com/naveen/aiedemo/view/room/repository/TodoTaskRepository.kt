@@ -13,7 +13,7 @@ abstract class TodoTaskRepository : Repository {
 
     abstract fun getData(context: Context): LiveData<List<TodoTableModel>>
 
-    abstract fun updateTodoTask(taskName: String, taskInfo: String, id: Int, context: Context)
+    abstract fun updateTodoTask(taskName: String, taskInfo: String, id: Int, taskTime: Long, context: Context)
 
     abstract fun deleteTodoTask(id: Int, context: Context)
 
