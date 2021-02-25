@@ -9,7 +9,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
-import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +20,9 @@ import com.naveen.aiedemo.view.listeners.RecyclerViewListener
 import com.naveen.aiedemo.view.room.model.TodoTableModel
 import com.naveen.aiedemo.view.room.repository.TodoTaskRepositoryImpl
 import kotlinx.android.synthetic.main.fragment_todolist.*
+import com.naveen.aiedemo.view.datetimepicker.DateTimePickerDialog
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -57,9 +59,11 @@ class TodoListFragment : BaseFragment() {
         todoListRecyclerView.hasFixedSize()
         todoListRecyclerView.adapter = TodoTaskListAdapter(object : RecyclerViewListener {
             override fun onClick(todoTaskObject: TodoTableModel) {
-                Log.d("Naveen", "=====>>>\n Selected => ".plus(todoTaskObject.Id.toString())
+                Log.d(
+                    "Naveen", "=====>>>\n Selected => ".plus(todoTaskObject.Id.toString())
                         .plus(" : ").plus(todoTaskObject.TaskTitle)
-                        .plus(" ~~~ ").plus(todoTaskObject.TaskInfo))
+                        .plus(" ~~~ ").plus(todoTaskObject.TaskInfo)
+                )
                 todoTaskViewModel.selectedTaskObject = todoTaskObject
                 findNavController().navigate(R.id.action_DisplayTaskListFragment_to_DisplaySingleTaskFragment)
             }

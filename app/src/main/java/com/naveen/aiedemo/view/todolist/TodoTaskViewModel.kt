@@ -12,12 +12,16 @@ import com.naveen.aiedemo.R
 import com.naveen.aiedemo.view.listeners.call
 import com.naveen.aiedemo.view.room.model.TodoTableModel
 import com.naveen.aiedemo.view.room.repository.TodoTaskRepository
+import java.text.SimpleDateFormat
+import java.util.*
 
 class TodoTaskViewModel : ViewModel() {
 
     var liveDataTodoTableModelTest = MutableLiveData<List<TodoTableModel>>().apply { value = getIDefaultNoDataMessage() }
 
     lateinit var selectedTaskObject: TodoTableModel
+
+    val userSelectedDateTime = MutableLiveData<Date>().apply { value = Date() }
 
     private var _createNewTaskOnClick = LiveEvent<Unit>()
     val createNewTaskOnClick: LiveData<Unit> = _createNewTaskOnClick
@@ -27,6 +31,9 @@ class TodoTaskViewModel : ViewModel() {
 
     private var _deleteTaskOnClick = LiveEvent<Unit>()
     val deleteTaskOnClick: LiveData<Unit> = _deleteTaskOnClick
+
+    private var _dateTimePickerOnClick = LiveEvent<Unit>()
+    val dateTimePickerOnClick: LiveData<Unit> = _dateTimePickerOnClick
 
     lateinit var todoTaskRepository: TodoTaskRepository
 
@@ -56,6 +63,11 @@ class TodoTaskViewModel : ViewModel() {
         Navigation.findNavController(view).navigate(R.id.action_DisplayTaskListFragment_to_CreateNewTaskFragment)
     }
 
+    fun getDateInString(date: Date) : String {
+        val sdf = SimpleDateFormat("dd.MM.yyyy - HH:mm", Locale.getDefault())
+        return sdf.format(date)
+    }
+
     fun saveNewTask() {
         _createNewTaskOnClick.call()
     }
@@ -66,5 +78,9 @@ class TodoTaskViewModel : ViewModel() {
 
     fun deleteTask() {
         _deleteTaskOnClick.call()
+    }
+
+    fun dateTimePickerClick() {
+        _dateTimePickerOnClick.call()
     }
 }
