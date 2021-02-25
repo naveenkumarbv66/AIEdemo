@@ -9,6 +9,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.fragment.FragmentNavigator
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.naveen.aiedemo.R
@@ -58,6 +60,8 @@ class TodoListFragment : BaseFragment() {
                 Log.d("Naveen", "=====>>>\n Selected => ".plus(todoTaskObject.Id.toString())
                         .plus(" : ").plus(todoTaskObject.TaskTitle)
                         .plus(" ~~~ ").plus(todoTaskObject.TaskInfo))
+                todoTaskViewModel.selectedTaskObject = todoTaskObject
+                findNavController().navigate(R.id.action_DisplayTaskListFragment_to_DisplaySingleTaskFragment)
             }
         })
         todoListRecyclerView.addItemDecoration(

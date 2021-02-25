@@ -17,6 +17,8 @@ class TodoTaskViewModel : ViewModel() {
 
     var liveDataTodoTableModelTest = MutableLiveData<List<TodoTableModel>>().apply { value = getIDefaultNoDataMessage() }
 
+    lateinit var selectedTaskObject: TodoTableModel
+
     private var _createNewTaskOnClick = LiveEvent<Unit>()
     val createNewTaskOnClick: LiveData<Unit> = _createNewTaskOnClick
 

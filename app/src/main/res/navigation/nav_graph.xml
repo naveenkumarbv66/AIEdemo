@@ -14,15 +14,20 @@
         <action
             android:id="@+id/action_DisplayTaskListFragment_to_CreateNewTaskFragment"
             app:destination="@id/CreateNewTaskFragment" />
+        <action
+            android:id="@+id/action_DisplayTaskListFragment_to_DisplaySingleTaskFragment"
+            app:destination="@id/DisplaySingleTaskFragment" />
     </fragment>
     <fragment
         android:id="@+id/CreateNewTaskFragment"
         android:name="com.naveen.aiedemo.view.newtodo.NewTodoFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_newtodo">
-
-        <action
-            android:id="@+id/action_CreateNewFragment_to_DisplayTaskListFragment"
-            app:destination="@id/DisplayTaskListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/DisplaySingleTaskFragment"
+        android:name="com.naveen.aiedemo.view.displaytask.DisplayTodoFragment"
+        android:label="@string/second_fragment_label"
+        tools:layout="@layout/fragment_display_todo">
     </fragment>
 </navigation>
