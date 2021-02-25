@@ -9,13 +9,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.naveen.aiedemo.R
 import com.naveen.aiedemo.databinding.FragmentTodolistBinding
 import com.naveen.aiedemo.view.BaseFragment
 import com.naveen.aiedemo.view.adapter.TodoTaskListAdapter
+import com.naveen.aiedemo.view.listeners.RecyclerViewListener
 import com.naveen.aiedemo.view.room.model.TodoTableModel
 import com.naveen.aiedemo.view.room.repository.TodoTaskRepositoryImpl
 import kotlinx.android.synthetic.main.fragment_todolist.*
@@ -53,7 +53,13 @@ class TodoListFragment : BaseFragment() {
         val layoutManager = LinearLayoutManager(context)
         todoListRecyclerView.layoutManager = layoutManager
         todoListRecyclerView.hasFixedSize()
-        todoListRecyclerView.adapter = TodoTaskListAdapter()
+        todoListRecyclerView.adapter = TodoTaskListAdapter(object : RecyclerViewListener {
+            override fun onClick(todoTaskObject: TodoTableModel) {
+                Log.d("Naveen", "=====>>>\n Selected => ".plus(todoTaskObject.Id.toString())
+                        .plus(" : ").plus(todoTaskObject.TaskTitle)
+                        .plus(" ~~~ ").plus(todoTaskObject.TaskInfo))
+            }
+        })
         todoListRecyclerView.addItemDecoration(
             DividerItemDecoration(
                 context,

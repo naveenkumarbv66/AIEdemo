@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.naveen.aiedemo.R
 import com.naveen.aiedemo.databinding.FragmentNewtodoBinding
 import com.naveen.aiedemo.view.BaseFragment
+import com.naveen.aiedemo.view.listeners.RecyclerViewListener
 import com.naveen.aiedemo.view.todolist.TodoTaskViewModel
 import kotlinx.android.synthetic.main.fragment_newtodo.*
 

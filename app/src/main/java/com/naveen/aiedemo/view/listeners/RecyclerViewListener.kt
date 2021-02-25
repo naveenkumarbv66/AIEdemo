@@ -1,5 +1,7 @@
 package com.naveen.aiedemo.view.listeners
 
-interface RecyclerViewListener<T>{
-    fun onClick(model: T)
+import com.naveen.aiedemo.view.room.model.TodoTableModel
+
+interface RecyclerViewListener{
+    fun onClick(todoTaskObject: TodoTableModel)
 }

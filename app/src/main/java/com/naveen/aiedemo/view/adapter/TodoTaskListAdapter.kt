@@ -1,6 +1,5 @@
 package com.naveen.aiedemo.view.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
@@ -8,9 +7,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.naveen.aiedemo.R
 import com.naveen.aiedemo.databinding.TodoTaskRowBinding
+import com.naveen.aiedemo.view.listeners.RecyclerViewListener
 import com.naveen.aiedemo.view.room.model.TodoTableModel
 
-class TodoTaskListAdapter : RecyclerView.Adapter<ViewHolder>() {
+class TodoTaskListAdapter(private val listener: RecyclerViewListener) : RecyclerView.Adapter<ViewHolder>() {
 
     private var todoTaskList: List<TodoTableModel> = emptyList()
 
@@ -19,7 +19,6 @@ class TodoTaskListAdapter : RecyclerView.Adapter<ViewHolder>() {
         @BindingAdapter("todoTaskList")
         fun RecyclerView.bindItems(todoTaskList: List<TodoTableModel>) {
             val adapter = adapter as TodoTaskListAdapter
-            Log.d("Naveen","RecyclerView.bindItems")
             adapter.update(todoTaskList)
         }
     }
@@ -35,7 +34,7 @@ class TodoTaskListAdapter : RecyclerView.Adapter<ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if (holder is ItemViewHolder && todoTaskList.size > position) {
-            holder.bind(todoTaskList[position])
+            holder.bind(todoTaskList[position], listener)
         }
     }
 
@@ -50,10 +49,9 @@ class TodoTaskListAdapter : RecyclerView.Adapter<ViewHolder>() {
             false
         )
     ) : ViewHolder(binding.root) {
-
-        fun bind(item: TodoTableModel) {
-            binding.title = "Title : ".plus(item.TaskTitle)
-            binding.info = "Info : ".plus(item.TaskInfo)
+        fun bind(item: TodoTableModel, listener: RecyclerViewListener) {
+            binding.todoTableModel = item
+            binding.listener = listener
         }
     }
 
