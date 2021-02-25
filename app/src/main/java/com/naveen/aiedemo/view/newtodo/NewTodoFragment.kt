@@ -57,7 +57,8 @@ class NewTodoFragment : BaseFragment() {
                 todoTaskViewModel.insertData(
                     it1.applicationContext,
                     taskName.text.toString(),
-                    taskBio.text.toString()
+                    taskBio.text.toString(),
+                    todoTaskViewModel.userSelectedDateTime.value!!.time
                 )
                 showAlertDialog()
             }

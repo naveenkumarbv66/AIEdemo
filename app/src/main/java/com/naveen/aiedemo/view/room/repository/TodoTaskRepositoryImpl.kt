@@ -8,10 +8,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class TodoTaskRepositoryImpl : TodoTaskRepository() {
-    override fun saveTodoTask(taskName: String, taskInfo: String, context: Context) {
+    override fun saveTodoTask(taskName: String, taskInfo: String, taskTime: Long, context: Context) {
         initializeDatabase(context)
         CoroutineScope(Dispatchers.IO).launch {
-            val todoTaskDetails = TodoTableModel(taskName, taskInfo)
+            val todoTaskDetails = TodoTableModel(taskName, taskInfo, taskTime)
             todoTaskDatabase.todoTaskDao().insertTodoTask(todoTaskDetails)
         }
     }

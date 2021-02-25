@@ -9,7 +9,7 @@ abstract class TodoTaskRepository : Repository {
 
     lateinit var todoTaskDatabase: TodoTaskDatabase
 
-    abstract fun saveTodoTask(taskName: String, taskInfo: String, context: Context)
+    abstract fun saveTodoTask(taskName: String, taskInfo: String, taskTime: Long, context: Context)
 
     abstract fun getData(context: Context): LiveData<List<TodoTableModel>>
 

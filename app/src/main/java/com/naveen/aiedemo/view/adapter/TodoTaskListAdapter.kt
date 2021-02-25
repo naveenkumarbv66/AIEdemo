@@ -2,6 +2,7 @@ package com.naveen.aiedemo.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -9,6 +10,7 @@ import com.naveen.aiedemo.R
 import com.naveen.aiedemo.databinding.TodoTaskRowBinding
 import com.naveen.aiedemo.view.listeners.RecyclerViewListener
 import com.naveen.aiedemo.view.room.model.TodoTableModel
+import java.util.*
 
 class TodoTaskListAdapter(private val listener: RecyclerViewListener) : RecyclerView.Adapter<ViewHolder>() {
 

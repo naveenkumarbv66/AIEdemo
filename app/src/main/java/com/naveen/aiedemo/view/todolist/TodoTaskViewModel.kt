@@ -37,8 +37,8 @@ class TodoTaskViewModel : ViewModel() {
 
     lateinit var todoTaskRepository: TodoTaskRepository
 
-    fun insertData(context: Context, taskTile: String, taskInfo: String) {
-        todoTaskRepository.saveTodoTask(taskTile, taskInfo, context)
+    fun insertData(context: Context, taskTile: String, taskInfo: String, taskTime: Long) {
+        todoTaskRepository.saveTodoTask(taskTile, taskInfo, taskTime, context)
     }
 
     fun updateData(context: Context, taskTile: String, taskInfo: String, id: Int) {
@@ -55,7 +55,7 @@ class TodoTaskViewModel : ViewModel() {
 
      fun getIDefaultNoDataMessage(): List<TodoTableModel> {
         val items = mutableListOf<TodoTableModel>()
-        items.add(TodoTableModel("No data found","Please create a TODO task"))
+        items.add(TodoTableModel("No data found","Please create a TODO task", 0.toLong()))
         return items
     }
 
