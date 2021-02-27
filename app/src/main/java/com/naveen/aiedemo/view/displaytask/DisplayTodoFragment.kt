@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 import com.naveen.aiedemo.R
 import com.naveen.aiedemo.databinding.FragmentDisplayTodoBinding
 import com.naveen.aiedemo.view.BaseFragment
@@ -52,7 +50,7 @@ class DisplayTodoFragment : BaseFragment() {
                     todoTaskViewModel.selectedTaskObject.Id ?: 0,
                     todoTaskViewModel.userSelectedDateTime.value!!.time
                 )
-                showAlertDialog()
+                showAlertDialog(getString(R.string.successfully_updated_stored_data))
             }
         })
 
@@ -64,7 +62,7 @@ class DisplayTodoFragment : BaseFragment() {
                     it1.applicationContext,
                     todoTaskViewModel.selectedTaskObject.Id ?: 0
                 )
-                showAlertDialog()
+                showAlertDialog(getString(R.string.successfully_deleted_stored_data))
             }
         })
 
@@ -76,15 +74,6 @@ class DisplayTodoFragment : BaseFragment() {
             Date(todoTaskViewModel.selectedTaskObject.TaskTime)
 
         binding.executePendingBindings()
-    }
-
-    private fun showAlertDialog() {
-        Toast.makeText(
-            activity,
-            getString(R.string.successfully_updated_stored_data),
-            Toast.LENGTH_LONG
-        ).show()
-        findNavController().popBackStack()
     }
 
     private fun openDateTimePickerDialog() {

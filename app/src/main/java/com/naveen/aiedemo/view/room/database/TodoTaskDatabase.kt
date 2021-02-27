@@ -10,6 +10,9 @@ abstract class TodoTaskDatabase : RoomDatabase() {
     abstract fun todoTaskDao(): DatabaseQueryAccess
 
     companion object {
+
+        private const val DATA_BASE_CLASS_TABLE = "TODO_TASK_DATABASE"
+
         @Volatile
         private var INSTANCE: TodoTaskDatabase? = null
 
@@ -18,7 +21,7 @@ abstract class TodoTaskDatabase : RoomDatabase() {
 
             synchronized(this) {
                 INSTANCE = Room
-                    .databaseBuilder(context, TodoTaskDatabase::class.java, "TODO_TASK_DATABASE")
+                    .databaseBuilder(context, TodoTaskDatabase::class.java, DATA_BASE_CLASS_TABLE)
                     .fallbackToDestructiveMigration()
                     .build()
 

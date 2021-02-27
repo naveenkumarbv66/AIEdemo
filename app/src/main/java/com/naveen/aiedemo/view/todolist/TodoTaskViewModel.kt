@@ -8,11 +8,10 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.Navigation
 import com.hadilq.liveevent.LiveEvent
 import com.naveen.aiedemo.R
-import com.naveen.aiedemo.view.listeners.LongToDateString
+import com.naveen.aiedemo.view.datetimepicker.adapter.PickerAdapter.Companion.DEFAULT_DATETIME_FORMAT
 import com.naveen.aiedemo.view.listeners.call
 import com.naveen.aiedemo.view.room.model.TodoTableModel
 import com.naveen.aiedemo.view.room.repository.TodoTaskRepository
-import java.text.SimpleDateFormat
 import java.util.*
 
 class TodoTaskViewModel : ViewModel() {
@@ -57,9 +56,9 @@ class TodoTaskViewModel : ViewModel() {
         return todoTaskRepository.getDataByDate(context)
     }
 
-     fun getIDefaultNoDataMessage(): List<TodoTableModel> {
+    fun getIDefaultNoDataMessage(): List<TodoTableModel> {
         val items = mutableListOf<TodoTableModel>()
-        items.add(TodoTableModel("No data found","Please create a TODO task", 0.toLong(), false))
+        items.add(TodoTableModel(NO_DATA_FOUND_IN_ROOM_DATA_BASE, PLEASE_CREATE_A_TODO_TASK, 0.toLong(), false))
         return items
     }
 
@@ -67,9 +66,8 @@ class TodoTaskViewModel : ViewModel() {
         Navigation.findNavController(view).navigate(R.id.action_DisplayTaskListFragment_to_CreateNewTaskFragment)
     }
 
-    fun getDateInString(date: Date) : String {
-        val sdf = SimpleDateFormat("dd.MM.yyyy - HH:mm", Locale.getDefault())
-        return "Date & Time: ".plus(sdf.format(date))
+    fun getDateInString(date: Date): String {
+        return DATE_AND_TIME.plus(DEFAULT_DATETIME_FORMAT.format(date))
     }
 
     fun saveNewTask() {
@@ -88,15 +86,23 @@ class TodoTaskViewModel : ViewModel() {
         _dateTimePickerOnClick.call()
     }
 
-    fun updateTaskStatus(latestData: List<TodoTableModel>, context: Context): List<TodoTableModel>{
+    fun updateTaskStatus(latestData: List<TodoTableModel>, context: Context): List<TodoTableModel> {
         latestData?.forEachIndexed { _: Int, todoTableModel: TodoTableModel ->
             if (Calendar.getInstance().time.after(Date(todoTableModel.TaskTime)) && todoTableModel.IsActive) {
-                todoTaskRepository.updateTodoTaskStatus(!todoTableModel.IsActive, todoTableModel.Id ?: 0, context)
-            }else if (Calendar.getInstance().time.before(Date(todoTableModel.TaskTime)) && !todoTableModel.IsActive) {
-                todoTaskRepository.updateTodoTaskStatus(!todoTableModel.IsActive, todoTableModel.Id ?: 0, context)
+                todoTaskRepository.updateTodoTaskStatus(!todoTableModel.IsActive, todoTableModel.Id
+                        ?: 0, context)
+            } else if (Calendar.getInstance().time.before(Date(todoTableModel.TaskTime)) && !todoTableModel.IsActive) {
+                todoTaskRepository.updateTodoTaskStatus(!todoTableModel.IsActive, todoTableModel.Id
+                        ?: 0, context)
             }
         }
         return latestData
+    }
+
+    companion object {
+        const val DATE_AND_TIME = "Date & Time: "
+        const val NO_DATA_FOUND_IN_ROOM_DATA_BASE = "No data found in ROOM database"
+        const val PLEASE_CREATE_A_TODO_TASK = "Please create a TODO task"
     }
 
 }

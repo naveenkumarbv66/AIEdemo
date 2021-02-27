@@ -66,7 +66,7 @@ class TodoListFragment : BaseFragment() {
 
         todoTaskViewModel.liveDataTodoTableModelTest.observe(viewLifecycleOwner, { listData ->
             listData.firstOrNull { it.IsActive }?.let {
-                createNotificationAlaram(it)
+                createNotificationAlarm(it)
             }
         })
 
@@ -79,8 +79,11 @@ class TodoListFragment : BaseFragment() {
             todoTaskViewModel.getDataByDate(it1.applicationContext)
                 ?.observe(viewLifecycleOwner, {
                     if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
-                        if (it.isNullOrEmpty()) todoTaskViewModel.liveDataTodoTableModelTest.value =
-                            todoTaskViewModel.getIDefaultNoDataMessage()
+                        if (it.isNullOrEmpty()) {
+                            todoTaskViewModel.liveDataTodoTableModelTest.value =
+                                todoTaskViewModel.getIDefaultNoDataMessage()
+                            deleteAlarm()
+                        }
                         else {
                             activity?.let { mActivity ->
                                 todoTaskViewModel.liveDataTodoTableModelTest.value =

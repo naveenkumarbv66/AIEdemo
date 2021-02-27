@@ -7,7 +7,9 @@ import android.content.Context
 import android.content.Intent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.naveen.aiedemo.view.notifications.NotificationPublisher
 import com.naveen.aiedemo.view.room.model.TodoTableModel
 
@@ -19,7 +21,7 @@ abstract class BaseFragment : Fragment() {
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    fun createNotificationAlaram(todoTaskObject: TodoTableModel) {
+    fun createNotificationAlarm(todoTaskObject: TodoTableModel) {
         val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, NotificationPublisher::class.java).apply {
             putExtra(NotificationPublisher.TASK_NAME, todoTaskObject.TaskTitle)
@@ -42,5 +44,21 @@ abstract class BaseFragment : Fragment() {
                 alarmTimeAtUTC,
                 pendingIntent
         )
+    }
+
+    fun deleteAlarm() {
+        val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.cancel(
+                PendingIntent.getBroadcast(
+                        activity?.applicationContext, NotificationPublisher.NOTIFICATION_ID, Intent(activity?.applicationContext, NotificationPublisher::class.java), PendingIntent.FLAG_CANCEL_CURRENT))
+    }
+
+    fun showAlertDialog(message: String) {
+        Toast.makeText(
+                activity,
+                message,
+                Toast.LENGTH_LONG
+        ).show()
+        findNavController().popBackStack()
     }
 }

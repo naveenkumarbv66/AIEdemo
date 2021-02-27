@@ -5,7 +5,7 @@ import android.widget.TextView
 import androidx.annotation.MainThread
 import androidx.databinding.BindingAdapter
 import com.hadilq.liveevent.LiveEvent
-import java.text.SimpleDateFormat
+import com.naveen.aiedemo.view.datetimepicker.adapter.PickerAdapter.Companion.DEFAULT_DATETIME_FORMAT
 import java.util.*
 
 @MainThread
@@ -14,15 +14,13 @@ fun LiveEvent<Unit>.call(){
 }
 
 @SuppressLint("SimpleDateFormat")
-fun Date.LongToDateString(dateLong: Long): String{
-    if(dateLong == 0.toLong()) return ""
-    val date = Date(dateLong)
-    val format = SimpleDateFormat("dd.MM.yyyy - HH:mm")
-    return format.format(date)
+fun Date.longToDateString(dateLong: Long): String{
+    return if(dateLong == 0.toLong())  ""
+    else DEFAULT_DATETIME_FORMAT.format(Date(dateLong))
 }
 
 @BindingAdapter("dateLongToString")
 fun parseDateValue(view: TextView, dateLong: Long){
-    view.text = Date().LongToDateString(dateLong)
+    view.text = Date().longToDateString(dateLong)
 }
 

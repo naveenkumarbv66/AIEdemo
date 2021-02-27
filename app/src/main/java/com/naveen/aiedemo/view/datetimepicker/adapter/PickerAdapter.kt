@@ -13,7 +13,7 @@ import java.util.Locale
 abstract class PickerAdapter(fm: FragmentManager, val initDate: Date? = null) : FragmentPagerAdapter(fm) {
 
     companion object {
-        val DEFAULT_DATETIME_FORMAT = SimpleDateFormat("HH:mm dd.MM.yyyy", Locale.getDefault())
+        val DEFAULT_DATETIME_FORMAT = SimpleDateFormat("dd-MM-yyyy hh.mm aa", Locale.getDefault())
     }
 
     protected var timePickerFragment: TimePickerFragment? = null

@@ -14,17 +14,6 @@ import com.naveen.aiedemo.view.DashboardActivity
 @Suppress("DEPRECATION")
 class NotificationPublisher : BroadcastReceiver() {
 
-    companion object {
-        const val ACTION_NAME = "MyBroadcastReceiverAction"
-        const val NOTIFICATION_CHANNEL_ID = "App_AIE_notification"
-        const val NOTIFICATION_CHANNEL_NAME = "AIE"
-        const val NOTIFICATION_CHANNEL_DESCRIPTION = "AIE_Dec"
-        const val NOTIFICATION_ID = 66
-
-        const val TASK_NAME = "taskName"
-        const val TASK_DESCRIPTION = "taskDescription"
-    }
-
     override fun onReceive(context: Context?, intent: Intent?) {
         if (intent?.action == ACTION_NAME) {
             createNotificationChannel(context, intent)
@@ -59,4 +48,16 @@ class NotificationPublisher : BroadcastReceiver() {
         }
         notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build())
     }
+
+    companion object {
+        const val ACTION_NAME = "MyBroadcastReceiverAction"
+        const val NOTIFICATION_CHANNEL_ID = "App_AIE_notification"
+        const val NOTIFICATION_CHANNEL_NAME = "AIE"
+        const val NOTIFICATION_CHANNEL_DESCRIPTION = "AIE_Dec"
+        const val NOTIFICATION_ID = 66
+
+        const val TASK_NAME = "taskName"
+        const val TASK_DESCRIPTION = "taskDescription"
+    }
+
 }
