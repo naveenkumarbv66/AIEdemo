@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.widget.TextView
 import androidx.annotation.MainThread
 import androidx.databinding.BindingAdapter
-import androidx.room.TypeConverter
 import com.hadilq.liveevent.LiveEvent
 import java.text.SimpleDateFormat
 import java.util.*
