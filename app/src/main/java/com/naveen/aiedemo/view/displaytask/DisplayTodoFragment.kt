@@ -13,7 +13,6 @@ import com.naveen.aiedemo.databinding.FragmentDisplayTodoBinding
 import com.naveen.aiedemo.view.BaseFragment
 import com.naveen.aiedemo.view.datetimepicker.DateTimePickerDialog
 import com.naveen.aiedemo.view.todolist.TodoTaskViewModel
-import kotlinx.android.synthetic.main.fragment_newtodo.*
 import java.util.*
 
 class DisplayTodoFragment : BaseFragment() {
@@ -44,12 +43,12 @@ class DisplayTodoFragment : BaseFragment() {
 
         todoTaskViewModel.updateTaskOnClick.observe(viewLifecycleOwner, {
             activity?.let { it1 ->
-                hideKeyboardFrom(it1, taskName)
-                hideKeyboardFrom(it1, taskBio)
+                hideKeyboardFrom(it1, binding.taskName)
+                hideKeyboardFrom(it1, binding.taskBio)
                 todoTaskViewModel.updateData(
                     it1.applicationContext,
-                    taskName.text.toString(),
-                    taskBio.text.toString(),
+                    binding.taskNameInputEditText.text.toString(),
+                    binding.taskDescInputEditText.text.toString(),
                     todoTaskViewModel.selectedTaskObject.Id ?: 0,
                     todoTaskViewModel.userSelectedDateTime.value!!.time
                 )
@@ -59,8 +58,8 @@ class DisplayTodoFragment : BaseFragment() {
 
         todoTaskViewModel.deleteTaskOnClick.observe(viewLifecycleOwner, {
             activity?.let { it1 ->
-                hideKeyboardFrom(it1, taskName)
-                hideKeyboardFrom(it1, taskBio)
+                hideKeyboardFrom(it1, binding.taskNameInputEditText)
+                hideKeyboardFrom(it1, binding.taskDescInputEditText)
                 todoTaskViewModel.deleteData(
                     it1.applicationContext,
                     todoTaskViewModel.selectedTaskObject.Id ?: 0

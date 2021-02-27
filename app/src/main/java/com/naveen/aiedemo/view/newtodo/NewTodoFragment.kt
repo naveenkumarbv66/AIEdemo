@@ -44,12 +44,12 @@ class NewTodoFragment : BaseFragment() {
 
         todoTaskViewModel.createNewTaskOnClick.observe(viewLifecycleOwner, {
             activity?.let { it1 ->
-                hideKeyboardFrom(it1, taskName)
-                hideKeyboardFrom(it1, taskBio)
+                hideKeyboardFrom(it1, binding.taskNameInputEditText)
+                hideKeyboardFrom(it1, binding.taskBio)
                 todoTaskViewModel.insertData(
                     it1.applicationContext,
-                    taskName.text.toString(),
-                    taskBio.text.toString(),
+                    binding.taskNameInputEditText.text.toString(),
+                    binding.taskDescInputEditText.text.toString(),
                     todoTaskViewModel.userSelectedDateTime.value!!.time
                 )
                 showAlertDialog()

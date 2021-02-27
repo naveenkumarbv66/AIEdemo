@@ -18,40 +18,52 @@
         tools:context=".view.newtodo.NewTodoFragment">
 
 
-        <EditText
-            android:id="@+id/taskName"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/taskNameInputLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
-            android:ems="10"
-            android:hint="@string/name"
-            android:inputType="textPersonName"
+            android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/textView">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/taskNameInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/name"
+                android:backgroundTint="@android:color/transparent"
+                android:ems="10"
+                android:inputType="textPersonName"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/taskBio"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:ems="10"
-            android:gravity="start|top"
-            android:inputType="textMultiLine"
-            android:hint="@string/description"
-            android:maxLines="3"
-            app:layout_constraintEnd_toEndOf="@+id/taskName"
-            app:layout_constraintStart_toStartOf="@+id/taskName"
-            app:layout_constraintTop_toBottomOf="@+id/taskName" />
+            app:layout_constraintEnd_toEndOf="@+id/taskNameInputLayout"
+            app:layout_constraintStart_toStartOf="@+id/taskNameInputLayout"
+            app:layout_constraintTop_toBottomOf="@+id/taskNameInputLayout">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/taskDescInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/description"
+                android:backgroundTint="@android:color/transparent"
+                android:ems="10"
+                android:gravity="start|top"
+                android:maxLines="3"
+                android:inputType="textMultiLine"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/saveButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:enabled="@{ (!TextUtils.isEmpty(taskBio.text.toString())) || !TextUtils.isEmpty(taskBio.text.toString())}"
+            android:enabled="@{ (!TextUtils.isEmpty(taskDescInputEditText.text.toString())) || !TextUtils.isEmpty(taskNameInputEditText.text.toString())}"
             android:onClick="@{(view) -> viewModel.saveNewTask()}"
             android:text="@string/save"
             app:layout_constraintEnd_toEndOf="parent"
