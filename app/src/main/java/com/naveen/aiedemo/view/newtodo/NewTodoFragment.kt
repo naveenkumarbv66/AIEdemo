@@ -41,6 +41,7 @@ class NewTodoFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.viewModel = todoTaskViewModel
+        todoTaskViewModel.userSelectedDateTime.value = Date()
 
         todoTaskViewModel.createNewTaskOnClick.observe(viewLifecycleOwner, {
             checkTodoTaskExistList()
@@ -76,7 +77,9 @@ class NewTodoFragment : BaseFragment() {
 
     private fun checkTodoTaskExistList() {
         activity?.let { it1 ->
-            todoTaskViewModel.getTodoTaskExistList(binding.taskNameInputEditText.text.toString(), it1.applicationContext)
+            todoTaskViewModel.getTodoTaskExistList(binding.taskNameInputEditText.text.toString(),
+                todoTaskViewModel.userSelectedDateTime.value!!.time,
+                it1.applicationContext)
                 ?.observe(viewLifecycleOwner, {
                     if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
                         if (it.isNullOrEmpty()) {

@@ -47,8 +47,8 @@ class TodoTaskRepositoryImpl : TodoTaskRepository() {
         }
     }
 
-    override fun getTodoTaskExistList(taskName: String, context: Context): LiveData<List<TodoTableModel>> {
+    override fun getTodoTaskExistList(taskName: String, taskTime: Long, context: Context): LiveData<List<TodoTableModel>> {
         initializeDatabase(context)
-        return todoTaskDatabase.todoTaskDao().getTodoTaskExistList(taskName)
+        return todoTaskDatabase.todoTaskDao().getTodoTaskExistList(taskName, taskTime)
     }
 }

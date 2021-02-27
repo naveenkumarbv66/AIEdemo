@@ -26,7 +26,7 @@ interface DatabaseQueryAccess {
     @Query("UPDATE TodoTaskTable SET IsActive = :isActive WHERE Id =:id")
     suspend fun updateActiveStatus(isActive: Boolean, id: Int)
 
-    @Query("SELECT * FROM TodoTaskTable WHERE TaskTitle = :taskTitle")
-    fun getTodoTaskExistList(taskTitle: String): LiveData<List<TodoTableModel>>
+    @Query("SELECT * FROM TodoTaskTable WHERE TaskTitle = :taskTitle AND TaskTime = :taskTime")
+    fun getTodoTaskExistList(taskTitle: String, taskTime: Long): LiveData<List<TodoTableModel>>
 
 }

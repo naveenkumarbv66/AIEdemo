@@ -46,6 +46,7 @@ class DisplayTodoFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.viewModel = todoTaskViewModel
+        todoTaskViewModel.userSelectedDateTime.value = Date(todoTaskViewModel.selectedTaskObject.TaskTime)
 
         todoTaskViewModel.updateTaskOnClick.observe(viewLifecycleOwner, {
             checkTodoTaskExistList()
@@ -92,6 +93,7 @@ class DisplayTodoFragment : BaseFragment() {
         activity?.let { it1 ->
             todoTaskViewModel.getTodoTaskExistList(
                 binding.taskNameInputEditText.text.toString(),
+                todoTaskViewModel.userSelectedDateTime.value!!.time,
                 it1.applicationContext
             )
                 ?.observe(viewLifecycleOwner, {
