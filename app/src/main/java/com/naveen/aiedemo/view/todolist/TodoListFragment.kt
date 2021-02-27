@@ -65,6 +65,7 @@ class TodoListFragment : BaseFragment() {
         todoListRecyclerView.hasFixedSize()
         todoListRecyclerView.adapter = TodoTaskListAdapter(object : RecyclerViewListener {
             override fun onClick(todoTaskObject: TodoTableModel) {
+                if(todoTaskObject.TaskTime == 0.toLong()) return
                 Log.d(
                         "Naveen", "=====>>>\n Selected => ".plus(todoTaskObject.Id.toString())
                         .plus(" : ").plus(todoTaskObject.TaskTitle)
