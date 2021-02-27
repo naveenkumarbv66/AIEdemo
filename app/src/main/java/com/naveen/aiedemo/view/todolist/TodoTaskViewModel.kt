@@ -53,6 +53,10 @@ class TodoTaskViewModel : ViewModel() {
         return todoTaskRepository.getData(context)
     }
 
+    fun getDataByDate(context: Context): LiveData<List<TodoTableModel>>? {
+        return todoTaskRepository.getDataByDate(context)
+    }
+
      fun getIDefaultNoDataMessage(): List<TodoTableModel> {
         val items = mutableListOf<TodoTableModel>()
         items.add(TodoTableModel("No data found","Please create a TODO task", 0.toLong()))

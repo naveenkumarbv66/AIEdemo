@@ -34,4 +34,9 @@ class TodoTaskRepositoryImpl : TodoTaskRepository() {
             todoTaskDatabase.todoTaskDao().deleteTodoTask(id)
         }
     }
+
+    override fun getDataByDate(context: Context): LiveData<List<TodoTableModel>> {
+        initializeDatabase(context)
+        return todoTaskDatabase.todoTaskDao().getTodoTaskListByDate()
+    }
 }

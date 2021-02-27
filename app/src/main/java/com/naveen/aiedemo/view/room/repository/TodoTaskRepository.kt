@@ -17,6 +17,8 @@ abstract class TodoTaskRepository : Repository {
 
     abstract fun deleteTodoTask(id: Int, context: Context)
 
+    abstract fun getDataByDate(context: Context): LiveData<List<TodoTableModel>>
+
     private fun initializeDB(context: Context): TodoTaskDatabase {
         return TodoTaskDatabase.getDatabaseClient(context)
     }

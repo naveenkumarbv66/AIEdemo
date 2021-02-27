@@ -20,4 +20,7 @@ interface DatabaseQueryAccess {
     @Query("DELETE FROM TodoTaskTable WHERE id = :id")
     suspend fun deleteTodoTask(id: Int)
 
+    @Query("SELECT * FROM TodoTaskTable ORDER BY taskTime")
+    fun getTodoTaskListByDate(): LiveData<List<TodoTableModel>>
+
 }

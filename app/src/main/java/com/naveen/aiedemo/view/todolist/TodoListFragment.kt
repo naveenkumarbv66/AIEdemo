@@ -76,7 +76,7 @@ class TodoListFragment : BaseFragment() {
                 )
                 todoTaskViewModel.selectedTaskObject = todoTaskObject
 //                createNotificationAlaram(todoTaskObject)
-                 findNavController().navigate(R.id.action_DisplayTaskListFragment_to_DisplaySingleTaskFragment)
+               //  findNavController().navigate(R.id.action_DisplayTaskListFragment_to_DisplaySingleTaskFragment)
             }
         })
         todoListRecyclerView.addItemDecoration(
@@ -106,7 +106,7 @@ class TodoListFragment : BaseFragment() {
 
     private fun getTodoCompleteList() {
         activity?.let { it1 ->
-            todoTaskViewModel.getData(it1.applicationContext)
+            todoTaskViewModel.getDataByDate(it1.applicationContext)
                     ?.observe(viewLifecycleOwner, {
                         if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
                             if (it.isNullOrEmpty()) todoTaskViewModel.liveDataTodoTableModelTest.value =

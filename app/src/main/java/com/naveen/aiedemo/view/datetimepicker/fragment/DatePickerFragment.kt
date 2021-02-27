@@ -42,7 +42,7 @@ class DatePickerFragment : androidx.fragment.app.Fragment() {
         val cal = Calendar.getInstance()
         cal.time = datetime
 
-        date.minDate = calendar.timeInMillis
+        //date.minDate = calendar.timeInMillis
         date.updateDate(cal[Calendar.YEAR], cal[Calendar.MONTH], cal[Calendar.DAY_OF_MONTH])
 
     }
