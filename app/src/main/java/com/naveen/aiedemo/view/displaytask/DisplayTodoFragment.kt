@@ -11,6 +11,7 @@ import com.naveen.aiedemo.R
 import com.naveen.aiedemo.databinding.FragmentDisplayTodoBinding
 import com.naveen.aiedemo.view.BaseFragment
 import com.naveen.aiedemo.view.datetimepicker.DateTimePickerDialog
+import com.naveen.aiedemo.view.listeners.longToDateString
 import com.naveen.aiedemo.view.todolist.TodoTaskViewModel
 import java.util.*
 
@@ -97,7 +98,7 @@ class DisplayTodoFragment : BaseFragment() {
             )
                 ?.observe(viewLifecycleOwner, {
                     if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
-                        if (it.isNullOrEmpty() || it[0].Id == todoTaskViewModel.selectedTaskObject.Id) {
+                        if (it.isNullOrEmpty() || !todoTaskViewModel.isSameDateExistsForOldRecode(it, Date().longToDateString(todoTaskViewModel.userSelectedDateTime.value!!.time))) {
                             hideKeyPad()
                             todoTaskViewModel.updateData(
                                 it1.applicationContext,

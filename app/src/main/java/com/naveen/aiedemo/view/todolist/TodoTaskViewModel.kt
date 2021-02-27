@@ -108,6 +108,10 @@ class TodoTaskViewModel : ViewModel() {
         return false
     }
 
+    fun isSameDateExistsForOldRecode(latestData: List<TodoTableModel>, selectedDate: String): Boolean{
+        return isSameDateExistsForNewRecode(latestData.filterNot { it.Id == selectedTaskObject.Id }, selectedDate)
+    }
+
     companion object {
         const val DATE_AND_TIME = "Date & Time: "
         const val NO_DATA_FOUND_IN_ROOM_DATA_BASE = "No data found in ROOM database"

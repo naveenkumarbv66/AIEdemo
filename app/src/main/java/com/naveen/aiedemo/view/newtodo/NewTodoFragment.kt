@@ -86,7 +86,7 @@ class NewTodoFragment : BaseFragment() {
                 it1.applicationContext)
                 ?.observe(viewLifecycleOwner, {
                     if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
-                        if (it.isNullOrEmpty()) {
+                        if (it.isNullOrEmpty() || !todoTaskViewModel.isSameDateExistsForNewRecode(it, Date().longToDateString(todoTaskViewModel.userSelectedDateTime.value!!.time))) {
                             hideKeyboardFrom(it1, binding.taskNameInputEditText)
                             hideKeyboardFrom(it1, binding.taskBio)
                             todoTaskViewModel.insertData(
