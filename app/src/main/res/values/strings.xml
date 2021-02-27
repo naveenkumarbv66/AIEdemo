@@ -16,5 +16,9 @@
     <string name="save">Save</string>
     <string name="new_todo_task_heading">Please enter below information to create new TODO task.</string>
     <string name="fragment_tag">fragmentDatePicker</string>
+    <string name="successfully_updated_stored_data">successfully updated in Room data base.</string>
+    <string name="update">Update</string>
+    <string name="delete_task">Delete Task</string>
+    <string name="update_todo_task_heading">=> Modify below information as per your wish and select UPDATE option. \n\n=> If you wish to delete this TODO task, then please select DELETE TASK option.</string>
 
 </resources>

@@ -23,15 +23,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
             android:ems="10"
+            android:hint="@string/name"
             android:inputType="textPersonName"
-            android:hint="Task Name"
             android:text="@{viewModel.selectedTaskObject.taskTitle}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
         <EditText
             android:id="@+id/taskBio"
@@ -39,9 +39,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:ems="10"
-            android:inputType="textPersonName"
             android:text="@{viewModel.selectedTaskObject.taskInfo}"
-            android:hint="Task Info"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            android:hint="@string/description"
             app:layout_constraintEnd_toEndOf="@+id/taskName"
             app:layout_constraintStart_toStartOf="@+id/taskName"
             app:layout_constraintTop_toBottomOf="@+id/taskName" />
@@ -50,9 +51,10 @@
             android:id="@+id/updateButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:enabled="@{ (!TextUtils.isEmpty(taskBio.text.toString())) || !TextUtils.isEmpty(taskBio.text.toString())}"
             android:onClick="@{(view) -> viewModel.updateTask()}"
-            android:text="Update"
+            android:text="@string/update"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button" />
@@ -61,9 +63,12 @@
             android:id="@+id/deleteButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Delete"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="@color/red"
             android:onClick="@{(view) -> viewModel.deleteTask()}"
+            android:text="@string/delete_task"
+            android:textColor="@color/white"
+            android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/updateButton"
             app:layout_constraintTop_toBottomOf="@+id/updateButton" />
@@ -72,12 +77,30 @@
             android:id="@+id/button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@{viewModel.getDateInString(viewModel.userSelectedDateTime)}"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/teal_700"
+            android:gravity="left|center"
             android:onClick="@{(view) -> viewModel.dateTimePickerClick()}"
+            android:text="@{viewModel.getDateInString(viewModel.userSelectedDateTime)}"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="@+id/taskBio"
             app:layout_constraintStart_toStartOf="@+id/taskBio"
             app:layout_constraintTop_toBottomOf="@+id/taskBio" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/update_todo_task_heading"
+            android:textColor="@color/purple_700"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
