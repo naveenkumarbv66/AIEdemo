@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import com.naveen.aiedemo.R
 import com.naveen.aiedemo.databinding.FragmentDisplayTodoBinding
 import com.naveen.aiedemo.view.BaseFragment
@@ -34,30 +35,25 @@ class DisplayTodoFragment : BaseFragment() {
         return binding.root
     }
 
+    private fun hideKeyPad() {
+        activity?.applicationContext?.let {
+            hideKeyboardFrom(it, binding.taskNameInputEditText)
+            hideKeyboardFrom(it, binding.taskDescInputEditText)
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.viewModel = todoTaskViewModel
 
         todoTaskViewModel.updateTaskOnClick.observe(viewLifecycleOwner, {
-            activity?.let { it1 ->
-                hideKeyboardFrom(it1, binding.taskName)
-                hideKeyboardFrom(it1, binding.taskBio)
-                todoTaskViewModel.updateData(
-                    it1.applicationContext,
-                    binding.taskNameInputEditText.text.toString(),
-                    binding.taskDescInputEditText.text.toString(),
-                    todoTaskViewModel.selectedTaskObject.Id ?: 0,
-                    todoTaskViewModel.userSelectedDateTime.value!!.time
-                )
-                showAlertDialog(getString(R.string.successfully_updated_stored_data))
-            }
+            checkTodoTaskExistList()
         })
 
         todoTaskViewModel.deleteTaskOnClick.observe(viewLifecycleOwner, {
             activity?.let { it1 ->
-                hideKeyboardFrom(it1, binding.taskNameInputEditText)
-                hideKeyboardFrom(it1, binding.taskDescInputEditText)
+                hideKeyPad()
                 todoTaskViewModel.deleteData(
                     it1.applicationContext,
                     todoTaskViewModel.selectedTaskObject.Id ?: 0
@@ -89,6 +85,30 @@ class DisplayTodoFragment : BaseFragment() {
                 Date(),
                 DateTimePickerDialog.TIME_DATE
             )
+        }
+    }
+
+    private fun checkTodoTaskExistList() {
+        activity?.let { it1 ->
+            todoTaskViewModel.getTodoTaskExistList(
+                binding.taskNameInputEditText.text.toString(),
+                it1.applicationContext
+            )
+                ?.observe(viewLifecycleOwner, {
+                    if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
+                        if (it.isNullOrEmpty() || it[0].Id == todoTaskViewModel.selectedTaskObject.Id) {
+                            hideKeyPad()
+                            todoTaskViewModel.updateData(
+                                it1.applicationContext,
+                                binding.taskNameInputEditText.text.toString(),
+                                binding.taskDescInputEditText.text.toString(),
+                                todoTaskViewModel.selectedTaskObject.Id ?: 0,
+                                todoTaskViewModel.userSelectedDateTime.value!!.time
+                            )
+                            showAlertDialog(getString(R.string.successfully_updated_stored_data))
+                        } else binding.taskName.error = getString(R.string.name_exists)
+                    }
+                })
         }
     }
 }

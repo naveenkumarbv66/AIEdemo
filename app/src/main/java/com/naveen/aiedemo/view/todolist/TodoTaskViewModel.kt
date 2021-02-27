@@ -48,8 +48,8 @@ class TodoTaskViewModel : ViewModel() {
         todoTaskRepository.deleteTodoTask(id, context)
     }
 
-    fun getData(context: Context): LiveData<List<TodoTableModel>>? {
-        return todoTaskRepository.getData(context)
+    fun getTodoTaskExistList(taskName: String, context: Context): LiveData<List<TodoTableModel>>? {
+        return todoTaskRepository.getTodoTaskExistList(taskName, context)
     }
 
     fun getDataByDate(context: Context): LiveData<List<TodoTableModel>>? {

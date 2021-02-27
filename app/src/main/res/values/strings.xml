@@ -20,6 +20,7 @@
     <string name="successfully_deleted_stored_data">successfully deleted from Room data base.</string>
     <string name="update">Update</string>
     <string name="delete_task">Delete Task</string>
+    <string name="name_exists">Name already exists in ROOM database.</string>
     <string name="update_todo_task_heading">=> Modify below information as per your wish and select UPDATE option. \n\n=> If you wish to delete this TODO task, then please select DELETE TASK option.</string>
 
 </resources>

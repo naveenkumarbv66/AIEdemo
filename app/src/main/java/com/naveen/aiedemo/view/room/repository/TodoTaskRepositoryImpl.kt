@@ -46,4 +46,9 @@ class TodoTaskRepositoryImpl : TodoTaskRepository() {
             todoTaskDatabase.todoTaskDao().updateActiveStatus(isActive, id)
         }
     }
+
+    override fun getTodoTaskExistList(taskName: String, context: Context): LiveData<List<TodoTableModel>> {
+        initializeDatabase(context)
+        return todoTaskDatabase.todoTaskDao().getTodoTaskExistList(taskName)
+    }
 }

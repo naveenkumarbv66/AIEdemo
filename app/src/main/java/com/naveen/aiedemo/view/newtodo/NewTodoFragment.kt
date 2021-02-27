@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.naveen.aiedemo.R
 import com.naveen.aiedemo.databinding.FragmentNewtodoBinding
 import com.naveen.aiedemo.view.BaseFragment
 import com.naveen.aiedemo.view.datetimepicker.DateTimePickerDialog
 import com.naveen.aiedemo.view.todolist.TodoTaskViewModel
-import kotlinx.android.synthetic.main.fragment_newtodo.*
 import java.util.*
 
 class NewTodoFragment : BaseFragment() {
@@ -43,17 +43,7 @@ class NewTodoFragment : BaseFragment() {
         binding.viewModel = todoTaskViewModel
 
         todoTaskViewModel.createNewTaskOnClick.observe(viewLifecycleOwner, {
-            activity?.let { it1 ->
-                hideKeyboardFrom(it1, binding.taskNameInputEditText)
-                hideKeyboardFrom(it1, binding.taskBio)
-                todoTaskViewModel.insertData(
-                    it1.applicationContext,
-                    binding.taskNameInputEditText.text.toString(),
-                    binding.taskDescInputEditText.text.toString(),
-                    todoTaskViewModel.userSelectedDateTime.value!!.time
-                )
-                showAlertDialog()
-            }
+            checkTodoTaskExistList()
         })
 
         todoTaskViewModel.dateTimePickerOnClick.observe(viewLifecycleOwner, {
@@ -81,6 +71,27 @@ class NewTodoFragment : BaseFragment() {
                 Date(),
                 DateTimePickerDialog.TIME_DATE
             )
+        }
+    }
+
+    private fun checkTodoTaskExistList() {
+        activity?.let { it1 ->
+            todoTaskViewModel.getTodoTaskExistList(binding.taskNameInputEditText.text.toString(), it1.applicationContext)
+                ?.observe(viewLifecycleOwner, {
+                    if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
+                        if (it.isNullOrEmpty()) {
+                            hideKeyboardFrom(it1, binding.taskNameInputEditText)
+                            hideKeyboardFrom(it1, binding.taskBio)
+                            todoTaskViewModel.insertData(
+                                it1.applicationContext,
+                                binding.taskNameInputEditText.text.toString(),
+                                binding.taskDescInputEditText.text.toString(),
+                                todoTaskViewModel.userSelectedDateTime.value!!.time
+                            )
+                            showAlertDialog()
+                        } else binding.taskNameInputLayout.error = getString(R.string.name_exists)
+                    }
+                })
         }
     }
 }
