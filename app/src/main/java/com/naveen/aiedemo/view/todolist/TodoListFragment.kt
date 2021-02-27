@@ -83,8 +83,7 @@ class TodoListFragment : BaseFragment() {
                             todoTaskViewModel.liveDataTodoTableModelTest.value =
                                 todoTaskViewModel.getIDefaultNoDataMessage()
                             deleteAlarm()
-                        }
-                        else {
+                        } else {
                             activity?.let { mActivity ->
                                 todoTaskViewModel.liveDataTodoTableModelTest.value =
                                     todoTaskViewModel

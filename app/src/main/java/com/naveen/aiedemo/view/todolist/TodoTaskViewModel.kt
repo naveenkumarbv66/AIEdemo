@@ -1,7 +1,6 @@
 package com.naveen.aiedemo.view.todolist
 
 import android.content.Context
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,7 +17,8 @@ import java.util.*
 
 class TodoTaskViewModel : ViewModel() {
 
-    var liveDataTodoTableModelTest = MutableLiveData<List<TodoTableModel>>().apply { value = getIDefaultNoDataMessage() }
+    var liveDataTodoTableModelTest =
+        MutableLiveData<List<TodoTableModel>>().apply { value = getIDefaultNoDataMessage() }
 
     lateinit var selectedTaskObject: TodoTableModel
 
@@ -60,12 +60,20 @@ class TodoTaskViewModel : ViewModel() {
 
     fun getIDefaultNoDataMessage(): List<TodoTableModel> {
         val items = mutableListOf<TodoTableModel>()
-        items.add(TodoTableModel(NO_DATA_FOUND_IN_ROOM_DATA_BASE, PLEASE_CREATE_A_TODO_TASK, 0.toLong(), false))
+        items.add(
+            TodoTableModel(
+                NO_DATA_FOUND_IN_ROOM_DATA_BASE,
+                PLEASE_CREATE_A_TODO_TASK,
+                0.toLong(),
+                false
+            )
+        )
         return items
     }
 
     fun createNewTaskScreen(view: View) {
-        Navigation.findNavController(view).navigate(R.id.action_DisplayTaskListFragment_to_CreateNewTaskFragment)
+        Navigation.findNavController(view)
+            .navigate(R.id.action_DisplayTaskListFragment_to_CreateNewTaskFragment)
     }
 
     fun getDateInString(date: Date): String {
@@ -91,25 +99,38 @@ class TodoTaskViewModel : ViewModel() {
     fun updateTaskStatus(latestData: List<TodoTableModel>, context: Context): List<TodoTableModel> {
         latestData?.forEachIndexed { _: Int, todoTableModel: TodoTableModel ->
             if (Calendar.getInstance().time.after(Date(todoTableModel.TaskTime)) && todoTableModel.IsActive) {
-                todoTaskRepository.updateTodoTaskStatus(!todoTableModel.IsActive, todoTableModel.Id
-                        ?: 0, context)
+                todoTaskRepository.updateTodoTaskStatus(
+                    !todoTableModel.IsActive, todoTableModel.Id
+                        ?: 0, context
+                )
             } else if (Calendar.getInstance().time.before(Date(todoTableModel.TaskTime)) && !todoTableModel.IsActive) {
-                todoTaskRepository.updateTodoTaskStatus(!todoTableModel.IsActive, todoTableModel.Id
-                        ?: 0, context)
+                todoTaskRepository.updateTodoTaskStatus(
+                    !todoTableModel.IsActive, todoTableModel.Id
+                        ?: 0, context
+                )
             }
         }
         return latestData
     }
 
-    fun isSameDateExistsForNewRecode(latestData: List<TodoTableModel>, selectedDate: String): Boolean{
+    fun isSameDateExistsForNewRecode(
+        latestData: List<TodoTableModel>,
+        selectedDate: String
+    ): Boolean {
         latestData.forEach {
             if (Date().longToDateString(it.TaskTime).contentEquals(selectedDate)) return true
         }
         return false
     }
 
-    fun isSameDateExistsForOldRecode(latestData: List<TodoTableModel>, selectedDate: String): Boolean{
-        return isSameDateExistsForNewRecode(latestData.filterNot { it.Id == selectedTaskObject.Id }, selectedDate)
+    fun isSameDateExistsForOldRecode(
+        latestData: List<TodoTableModel>,
+        selectedDate: String
+    ): Boolean {
+        return isSameDateExistsForNewRecode(
+            latestData.filterNot { it.Id == selectedTaskObject.Id },
+            selectedDate
+        )
     }
 
     companion object {

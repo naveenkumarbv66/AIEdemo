@@ -47,7 +47,8 @@ class DisplayTodoFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.viewModel = todoTaskViewModel
-        todoTaskViewModel.userSelectedDateTime.value = Date(todoTaskViewModel.selectedTaskObject.TaskTime)
+        todoTaskViewModel.userSelectedDateTime.value =
+            Date(todoTaskViewModel.selectedTaskObject.TaskTime)
 
         todoTaskViewModel.updateTaskOnClick.observe(viewLifecycleOwner, {
             checkTodoTaskExistList()
@@ -98,7 +99,11 @@ class DisplayTodoFragment : BaseFragment() {
             )
                 ?.observe(viewLifecycleOwner, {
                     if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
-                        if (it.isNullOrEmpty() || !todoTaskViewModel.isSameDateExistsForOldRecode(it, Date().longToDateString(todoTaskViewModel.userSelectedDateTime.value!!.time))) {
+                        if (it.isNullOrEmpty() || !todoTaskViewModel.isSameDateExistsForOldRecode(
+                                it,
+                                Date().longToDateString(todoTaskViewModel.userSelectedDateTime.value!!.time)
+                            )
+                        ) {
                             hideKeyPad()
                             todoTaskViewModel.updateData(
                                 it1.applicationContext,

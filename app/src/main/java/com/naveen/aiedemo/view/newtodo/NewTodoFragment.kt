@@ -59,7 +59,8 @@ class NewTodoFragment : BaseFragment() {
     }
 
     private fun showAlertDialog() {
-        Toast.makeText(activity, getString(R.string.successfully_stored_data), Toast.LENGTH_LONG).show()
+        Toast.makeText(activity, getString(R.string.successfully_stored_data), Toast.LENGTH_LONG)
+            .show()
         findNavController().popBackStack()
     }
 
@@ -82,11 +83,17 @@ class NewTodoFragment : BaseFragment() {
 
     private fun checkTodoTaskExistList() {
         activity?.let { it1 ->
-            todoTaskViewModel.getTodoTaskExistList(binding.taskNameInputEditText.text.toString(),
-                it1.applicationContext)
+            todoTaskViewModel.getTodoTaskExistList(
+                binding.taskNameInputEditText.text.toString(),
+                it1.applicationContext
+            )
                 ?.observe(viewLifecycleOwner, {
                     if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
-                        if (it.isNullOrEmpty() || !todoTaskViewModel.isSameDateExistsForNewRecode(it, Date().longToDateString(todoTaskViewModel.userSelectedDateTime.value!!.time))) {
+                        if (it.isNullOrEmpty() || !todoTaskViewModel.isSameDateExistsForNewRecode(
+                                it,
+                                Date().longToDateString(todoTaskViewModel.userSelectedDateTime.value!!.time)
+                            )
+                        ) {
                             hideKeyboardFrom(it1, binding.taskNameInputEditText)
                             hideKeyboardFrom(it1, binding.taskBio)
                             todoTaskViewModel.insertData(
