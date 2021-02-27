@@ -92,7 +92,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:text="@string/new_todo_task_heading"
-            android:textColor="@color/purple_700"
+            android:textColor="@color/orange"
             android:textSize="14sp"
             android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"

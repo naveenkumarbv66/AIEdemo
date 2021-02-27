@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:textStyle="italic|bold"
-            android:textColor="@{todoTableModel.isActive ? @color/black : @color/red}"
+            android:textColor="@{todoTableModel.isActive ? @color/teal_200 : @color/red}"
             dateLongToString = "@{todoTableModel.taskTime}"
             app:layout_constraintBaseline_toBaselineOf="@+id/todoTitle"
             app:layout_constraintEnd_toEndOf="parent" />
