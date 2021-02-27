@@ -1,6 +1,7 @@
 package com.naveen.aiedemo.view.todolist
 
 import android.content.Context
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,6 +11,7 @@ import com.hadilq.liveevent.LiveEvent
 import com.naveen.aiedemo.R
 import com.naveen.aiedemo.view.datetimepicker.adapter.PickerAdapter.Companion.DEFAULT_DATETIME_FORMAT
 import com.naveen.aiedemo.view.listeners.call
+import com.naveen.aiedemo.view.listeners.longToDateString
 import com.naveen.aiedemo.view.room.model.TodoTableModel
 import com.naveen.aiedemo.view.room.repository.TodoTaskRepository
 import java.util.*
@@ -48,8 +50,8 @@ class TodoTaskViewModel : ViewModel() {
         todoTaskRepository.deleteTodoTask(id, context)
     }
 
-    fun getTodoTaskExistList(taskName: String, taskTime: Long, context: Context): LiveData<List<TodoTableModel>>? {
-        return todoTaskRepository.getTodoTaskExistList(taskName, taskTime, context)
+    fun getTodoTaskExistList(taskName: String, context: Context): LiveData<List<TodoTableModel>>? {
+        return todoTaskRepository.getTodoTaskExistList(taskName, context)
     }
 
     fun getDataByDate(context: Context): LiveData<List<TodoTableModel>>? {
@@ -97,6 +99,13 @@ class TodoTaskViewModel : ViewModel() {
             }
         }
         return latestData
+    }
+
+    fun isSameDateExistsForNewRecode(latestData: List<TodoTableModel>, selectedDate: String): Boolean{
+        latestData.forEach {
+            if (Date().longToDateString(it.TaskTime).contentEquals(selectedDate)) return true
+        }
+        return false
     }
 
     companion object {

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Chronometer
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
@@ -13,7 +14,10 @@ import com.naveen.aiedemo.R
 import com.naveen.aiedemo.databinding.FragmentNewtodoBinding
 import com.naveen.aiedemo.view.BaseFragment
 import com.naveen.aiedemo.view.datetimepicker.DateTimePickerDialog
+import com.naveen.aiedemo.view.listeners.longToDateString
 import com.naveen.aiedemo.view.todolist.TodoTaskViewModel
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 import java.util.*
 
 class NewTodoFragment : BaseFragment() {
@@ -61,6 +65,7 @@ class NewTodoFragment : BaseFragment() {
 
     private fun openDateTimePickerDialog() {
         val callback: (date: Date) -> Unit = { newDate ->
+            newDate.seconds = 0
             todoTaskViewModel.userSelectedDateTime.value = newDate
         }
 
@@ -78,7 +83,6 @@ class NewTodoFragment : BaseFragment() {
     private fun checkTodoTaskExistList() {
         activity?.let { it1 ->
             todoTaskViewModel.getTodoTaskExistList(binding.taskNameInputEditText.text.toString(),
-                todoTaskViewModel.userSelectedDateTime.value!!.time,
                 it1.applicationContext)
                 ?.observe(viewLifecycleOwner, {
                     if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {

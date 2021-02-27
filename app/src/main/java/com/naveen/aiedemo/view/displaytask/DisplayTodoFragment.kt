@@ -93,7 +93,6 @@ class DisplayTodoFragment : BaseFragment() {
         activity?.let { it1 ->
             todoTaskViewModel.getTodoTaskExistList(
                 binding.taskNameInputEditText.text.toString(),
-                todoTaskViewModel.userSelectedDateTime.value!!.time,
                 it1.applicationContext
             )
                 ?.observe(viewLifecycleOwner, {
