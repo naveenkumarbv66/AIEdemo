@@ -14,7 +14,10 @@ data class TodoTableModel(
     var TaskInfo: String,
 
     @ColumnInfo(name = "taskTime")
-    var TaskTime: Long
+    var TaskTime: Long,
+
+    @ColumnInfo(name = "isActive")
+    var IsActive: Boolean
 
 ) {
     @PrimaryKey(autoGenerate = true)

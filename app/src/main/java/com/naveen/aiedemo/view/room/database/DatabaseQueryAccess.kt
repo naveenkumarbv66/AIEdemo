@@ -23,4 +23,7 @@ interface DatabaseQueryAccess {
     @Query("SELECT * FROM TodoTaskTable ORDER BY taskTime")
     fun getTodoTaskListByDate(): LiveData<List<TodoTableModel>>
 
+    @Query("UPDATE TodoTaskTable SET IsActive = :isActive WHERE Id =:id")
+    suspend fun updateActiveStatus(isActive: Boolean, id: Int)
+
 }

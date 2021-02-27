@@ -19,6 +19,8 @@ abstract class TodoTaskRepository : Repository {
 
     abstract fun getDataByDate(context: Context): LiveData<List<TodoTableModel>>
 
+    abstract fun updateTodoTaskStatus(isActive: Boolean, id: Int, context: Context)
+
     private fun initializeDB(context: Context): TodoTaskDatabase {
         return TodoTaskDatabase.getDatabaseClient(context)
     }

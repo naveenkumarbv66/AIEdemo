@@ -11,7 +11,7 @@ class TodoTaskRepositoryImpl : TodoTaskRepository() {
     override fun saveTodoTask(taskName: String, taskInfo: String, taskTime: Long, context: Context) {
         initializeDatabase(context)
         CoroutineScope(Dispatchers.IO).launch {
-            val todoTaskDetails = TodoTableModel(taskName, taskInfo, taskTime)
+            val todoTaskDetails = TodoTableModel(taskName, taskInfo, taskTime, true)
             todoTaskDatabase.todoTaskDao().insertTodoTask(todoTaskDetails)
         }
     }
@@ -38,5 +38,12 @@ class TodoTaskRepositoryImpl : TodoTaskRepository() {
     override fun getDataByDate(context: Context): LiveData<List<TodoTableModel>> {
         initializeDatabase(context)
         return todoTaskDatabase.todoTaskDao().getTodoTaskListByDate()
+    }
+
+    override fun updateTodoTaskStatus(isActive: Boolean, id: Int, context: Context) {
+        initializeDatabase(context)
+        CoroutineScope(Dispatchers.IO).launch {
+            todoTaskDatabase.todoTaskDao().updateActiveStatus(isActive, id)
+        }
     }
 }

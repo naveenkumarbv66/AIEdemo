@@ -1,7 +1,6 @@
 package com.naveen.aiedemo.view.todolist
 
 import android.content.Context
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.Navigation
 import com.hadilq.liveevent.LiveEvent
 import com.naveen.aiedemo.R
+import com.naveen.aiedemo.view.listeners.LongToDateString
 import com.naveen.aiedemo.view.listeners.call
 import com.naveen.aiedemo.view.room.model.TodoTableModel
 import com.naveen.aiedemo.view.room.repository.TodoTaskRepository
@@ -59,7 +59,7 @@ class TodoTaskViewModel : ViewModel() {
 
      fun getIDefaultNoDataMessage(): List<TodoTableModel> {
         val items = mutableListOf<TodoTableModel>()
-        items.add(TodoTableModel("No data found","Please create a TODO task", 0.toLong()))
+        items.add(TodoTableModel("No data found","Please create a TODO task", 0.toLong(), false))
         return items
     }
 
@@ -87,4 +87,16 @@ class TodoTaskViewModel : ViewModel() {
     fun dateTimePickerClick() {
         _dateTimePickerOnClick.call()
     }
+
+    fun updateTaskStatus(latestData: List<TodoTableModel>, context: Context): List<TodoTableModel>{
+        latestData?.forEachIndexed { _: Int, todoTableModel: TodoTableModel ->
+            if (Calendar.getInstance().time.after(Date(todoTableModel.TaskTime)) && todoTableModel.IsActive) {
+                todoTaskRepository.updateTodoTaskStatus(!todoTableModel.IsActive, todoTableModel.Id ?: 0, context)
+            }else if (Calendar.getInstance().time.before(Date(todoTableModel.TaskTime)) && !todoTableModel.IsActive) {
+                todoTaskRepository.updateTodoTaskStatus(!todoTableModel.IsActive, todoTableModel.Id ?: 0, context)
+            }
+        }
+        return latestData
+    }
+
 }
