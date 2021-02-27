@@ -23,14 +23,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
             android:ems="10"
+            android:hint="@string/name"
             android:inputType="textPersonName"
-            android:hint="Task Name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <EditText
             android:id="@+id/taskBio"
@@ -38,8 +38,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Task Info"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            android:hint="@string/description"
+            android:maxLines="3"
             app:layout_constraintEnd_toEndOf="@+id/taskName"
             app:layout_constraintStart_toStartOf="@+id/taskName"
             app:layout_constraintTop_toBottomOf="@+id/taskName" />
@@ -48,9 +50,10 @@
             android:id="@+id/saveButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
             android:enabled="@{ (!TextUtils.isEmpty(taskBio.text.toString())) || !TextUtils.isEmpty(taskBio.text.toString())}"
             android:onClick="@{(view) -> viewModel.saveNewTask()}"
-            android:text="Save"
+            android:text="@string/save"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dateTimeButton" />
@@ -59,12 +62,30 @@
             android:id="@+id/dateTimeButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@{viewModel.getDateInString(viewModel.userSelectedDateTime)}"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/teal_700"
+            android:textColor="@color/white"
+            android:gravity="left|center"
             android:onClick="@{(view) -> viewModel.dateTimePickerClick()}"
+            android:text="@{viewModel.getDateInString(viewModel.userSelectedDateTime)}"
             app:layout_constraintEnd_toEndOf="@+id/taskBio"
             app:layout_constraintStart_toStartOf="@+id/taskBio"
             app:layout_constraintTop_toBottomOf="@+id/taskBio" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/new_todo_task_heading"
+            android:textColor="@color/purple_700"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

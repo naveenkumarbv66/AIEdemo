@@ -10,4 +10,11 @@
     <string name="datetimepicker_next">Next</string>
     <string name="datetimepicker_close">Confirm</string>
 
+    <string name="successfully_stored_data">successfully stored in Room data base.</string>
+    <string name="name">Name</string>
+    <string name="description">Description</string>
+    <string name="save">Save</string>
+    <string name="new_todo_task_heading">Please enter below information to create new TODO task.</string>
+    <string name="fragment_tag">fragmentDatePicker</string>
+
 </resources>

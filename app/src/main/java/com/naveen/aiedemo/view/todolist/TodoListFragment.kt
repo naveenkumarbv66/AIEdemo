@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
@@ -20,24 +19,20 @@ import com.naveen.aiedemo.view.room.model.TodoTableModel
 import com.naveen.aiedemo.view.room.repository.TodoTaskRepositoryImpl
 import kotlinx.android.synthetic.main.fragment_todolist.*
 
-
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 class TodoListFragment : BaseFragment() {
 
     private val todoTaskViewModel: TodoTaskViewModel by activityViewModels()
     lateinit var binding: FragmentTodolistBinding
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(
-                inflater,
-                R.layout.fragment_todolist,
-                container,
-                false
+            inflater,
+            R.layout.fragment_todolist,
+            container,
+            false
         )
 
         binding.lifecycleOwner = this;
@@ -61,10 +56,10 @@ class TodoListFragment : BaseFragment() {
             }
         })
         todoListRecyclerView.addItemDecoration(
-                DividerItemDecoration(
-                        context,
-                        layoutManager.orientation
-                )
+            DividerItemDecoration(
+                context,
+                layoutManager.orientation
+            )
         )
 
         binding.viewModel = todoTaskViewModel
@@ -82,17 +77,19 @@ class TodoListFragment : BaseFragment() {
     private fun getTodoCompleteList() {
         activity?.let { it1 ->
             todoTaskViewModel.getDataByDate(it1.applicationContext)
-                    ?.observe(viewLifecycleOwner, {
-                        if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
-                            if (it.isNullOrEmpty()) todoTaskViewModel.liveDataTodoTableModelTest.value =
-                                    todoTaskViewModel.getIDefaultNoDataMessage()
-                            else {
-                                activity?.let { mActivity ->
-                                    todoTaskViewModel.liveDataTodoTableModelTest.value = todoTaskViewModel.updateTaskStatus(it, mActivity.applicationContext)
-                                }
+                ?.observe(viewLifecycleOwner, {
+                    if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
+                        if (it.isNullOrEmpty()) todoTaskViewModel.liveDataTodoTableModelTest.value =
+                            todoTaskViewModel.getIDefaultNoDataMessage()
+                        else {
+                            activity?.let { mActivity ->
+                                todoTaskViewModel.liveDataTodoTableModelTest.value =
+                                    todoTaskViewModel
+                                        .updateTaskStatus(it, mActivity.applicationContext)
                             }
                         }
-                    })
+                    }
+                })
         }
     }
 }

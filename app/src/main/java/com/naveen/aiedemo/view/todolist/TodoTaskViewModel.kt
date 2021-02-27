@@ -69,7 +69,7 @@ class TodoTaskViewModel : ViewModel() {
 
     fun getDateInString(date: Date) : String {
         val sdf = SimpleDateFormat("dd.MM.yyyy - HH:mm", Locale.getDefault())
-        return sdf.format(date)
+        return "Date & Time: ".plus(sdf.format(date))
     }
 
     fun saveNewTask() {
